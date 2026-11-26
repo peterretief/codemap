@@ -35,7 +35,7 @@ for (const p of PKGS) {
 const total = {pk: PKGS.length, files: PKGS.reduce((a, p) => a + p.files.length, 0), fns: PKGS.reduce((a, p) => a + p.nfn, 0), lines: PKGS.reduce((a, p) => a + p.lines, 0)};
 $("stats").innerHTML = [[total.pk, "packages"], [total.files, "files"], [total.fns, "functions and methods"], [total.lines, "lines of Go"]]
   .map(([n, l]) => `<div><b>${num(n)}</b> <span>${l}</span></div>`).join("");
-$("legend").innerHTML = AREAS.map(([k, label]) => `<span><i style="background:var(--a-${k})"></i>${label}</span>`).join("");
+$("legend").innerHTML = AREAS.map(([k, label]) => `<span><i style="background:var(--a-${k})"></i>${esc(label)}</span>`).join("");
 
 // --- The map: a package's row is one above the highest row it builds on.
 const layer = {};
@@ -101,7 +101,7 @@ for (const p of PKGS) {
     <rect x="${q.x}" y="${q.y}" width="${q.w}" height="30" rx="7" style="stroke:${color(p.path)}"/>
     <rect x="${q.x}" y="${q.y}" width="5" height="30" rx="2" style="fill:${color(p.path)};stroke:none"/>
     <text x="${q.cx + 2}" y="${q.y + 19}" text-anchor="middle">${esc(p.path.replace("cmd/", ""))}</text>
-    <title>${esc(p.path)}: ${p.nfn} functions, ${num(p.lines)} lines${p.doc ? "\n" + p.doc : ""}</title></g>`;
+    <title>${esc(p.path)}: ${p.nfn} functions, ${num(p.lines)} lines${p.doc ? "\n" + esc(p.doc) : ""}</title></g>`;
 }
 svg.innerHTML = `<g>${edges}</g><g>${nodes}</g>`;
 
